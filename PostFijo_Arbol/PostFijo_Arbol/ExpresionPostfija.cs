@@ -93,25 +93,32 @@ namespace PostFijo_Arbol
 
             while(Infija != "")
             {
-                if (!Operadores.Contains(Infija[0])) //Si es operando
+                if (!Operadores.Contains(Infija[0]) && Infija[0] != ')') //Si es operando y diferente a paréntisis derecho
                 {
                     Postfija += Infija[0];
                 }
                 else if (Operadores.Contains(Infija[0]) && Infija[0] != ')') //Si es operador y no es un paréntesis derecho
                 {
-                    if (PilaOperdores.Count == 0) //Si la pila está vacía
+                    var continuar = false;
+
+                    while (continuar == false)
                     {
-                        PilaOperdores.Push(Infija[0]);
-                    }
-                    else //Si no está vacía
-                    {
-                        if (EvaluarPrioridad(1,Infija[0]) > EvaluarPrioridad(0, Infija[0]))
+                        if (PilaOperdores.Count == 0) //Si la pila está vacía
                         {
                             PilaOperdores.Push(Infija[0]);
+                            continuar = true;
                         }
-                        else if(EvaluarPrioridad(1, Infija[0]) <= EvaluarPrioridad(0, Infija[0]))
+                        else //Si no está vacía
                         {
-                            Postfija += PilaOperdores.Pop();
+                            if (EvaluarPrioridad(1, Infija[0]) > EvaluarPrioridad(0, PilaOperdores.Peek()))
+                            {
+                                PilaOperdores.Push(Infija[0]);
+                                continuar = true;
+                            }
+                            else
+                            {
+                                Postfija += PilaOperdores.Pop();
+                            }
                         }
                     }
                 }
@@ -144,6 +151,8 @@ namespace PostFijo_Arbol
                     Postfija += PilaOperdores.Pop();
                 }
             }
+
+            Postfija += "#"; //Se le agrega para mostrar que se llegó al estado de aceptación
         }
     }
 }
