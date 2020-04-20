@@ -6,11 +6,11 @@ namespace PostFijo_Arbol
 {
     public class ExpresionPostfija
     {
-        public List<char> Operadores { get; set; }
+        private List<char> Operadores { get; set; }
 
-        public Stack<char> PilaOperdores { get; set; }
+        private Stack<char> PilaOperdores { get; set; }
 
-        public string Infija { get; set; } //Expresión normal, ejemplo: (A|B)*|A
+        private string Infija { get; set; } //Expresión normal, ejemplo: (A|B)*|A
 
         public string Postfija { get; set; }
 
@@ -18,7 +18,6 @@ namespace PostFijo_Arbol
         {
             Operadores = new List<char>();
             Operadores.Add('(');
-            Operadores.Add(')');
             Operadores.Add('*');
             Operadores.Add('|');
             Operadores.Add('.');
@@ -36,7 +35,7 @@ namespace PostFijo_Arbol
         /// 0 = prioridad dentro de la pila
         /// 1 = prioridad fuera de la pila </param>
         /// <returns>Prioridad del operador evaluado</returns>
-        public int EvaluarPrioridad(int Posicion, char operador)
+        private int EvaluarPrioridad(int Posicion, char operador)
         {
             var prioridad = -1;
 
@@ -86,6 +85,65 @@ namespace PostFijo_Arbol
 
 
             return prioridad;
+        }
+
+        public void ConvertirPostfijo(string infijo)
+        {
+            Infija = infijo;
+
+            while(Infija != "")
+            {
+                if (!Operadores.Contains(Infija[0])) //Si es operando
+                {
+                    Postfija += Infija[0];
+                }
+                else if (Operadores.Contains(Infija[0]) && Infija[0] != ')') //Si es operador y no es un paréntesis derecho
+                {
+                    if (PilaOperdores.Count == 0) //Si la pila está vacía
+                    {
+                        PilaOperdores.Push(Infija[0]);
+                    }
+                    else //Si no está vacía
+                    {
+                        if (EvaluarPrioridad(1,Infija[0]) > EvaluarPrioridad(0, Infija[0]))
+                        {
+                            PilaOperdores.Push(Infija[0]);
+                        }
+                        else if(EvaluarPrioridad(1, Infija[0]) <= EvaluarPrioridad(0, Infija[0]))
+                        {
+                            Postfija += PilaOperdores.Pop();
+                        }
+                    }
+                }
+                else if(Infija[0] == ')')
+                {
+                    Postfija += PilaOperdores.Pop();
+
+                    if (PilaOperdores.Peek() == '(')
+                    {
+                        PilaOperdores.Pop();
+                    }
+                    else
+                    {
+                        while (PilaOperdores.Peek() != '(')
+                        {
+                            Postfija += PilaOperdores.Pop();
+                        }
+
+                        PilaOperdores.Pop();
+                    }
+                }
+
+                Infija = Infija.Remove(0, 1);
+            }
+
+            if (PilaOperdores.Count > 0)
+            {
+                while (PilaOperdores.Count > 0)
+                {
+                    Postfija += PilaOperdores.Pop();
+                }
+            }
         }
     }
 }

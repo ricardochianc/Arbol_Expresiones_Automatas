@@ -6,7 +6,10 @@ namespace PostFijo_Arbol
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var convertidor = new ExpresionPostfija();
+
+            Console.WriteLine("Ingrese expresión para convertir a Postfijo: ");
+            convertidor.ConvertirPostfijo(Console.ReadLine());
             Console.ReadKey();
         }
     }
