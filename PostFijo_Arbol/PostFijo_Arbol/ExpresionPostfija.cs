@@ -156,7 +156,7 @@ namespace PostFijo_Arbol
                 }
             }
 
-            Postfija += "#"; //Se le agrega para mostrar que se llegó al estado de aceptación
+            Postfija += ".#"; //Se le agrega para mostrar que se llegó al estado de aceptación
         }
     }
 }
