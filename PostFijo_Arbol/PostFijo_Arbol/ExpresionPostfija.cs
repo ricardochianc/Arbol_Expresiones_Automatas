@@ -87,6 +87,10 @@ namespace PostFijo_Arbol
             return prioridad;
         }
 
+        /// <summary>
+        /// Método de conversión de infijo (expresión normal)  a postfijo
+        /// </summary>
+        /// <param name="infijo">Cadena de expresión normal</param>
         public void ConvertirPostfijo(string infijo)
         {
             Infija = infijo;
