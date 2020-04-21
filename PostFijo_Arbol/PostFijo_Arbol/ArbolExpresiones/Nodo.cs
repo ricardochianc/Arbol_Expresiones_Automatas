@@ -26,7 +26,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
             IzqNodo = null;
             DrchNodo = null;
 
-            EsHoja = true;
+            EsHoja = false;
             NumNodo = -1;
         }
     }
