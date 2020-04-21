@@ -41,7 +41,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                 }
                 else if (Operadores.Contains(expresionPostfija[0]) && expresionPostfija[0] != '#' ) //Si ES operador
                 {
-                    if (pila.Count >= 2)
+                    if (pila.Count >= 2 && pila.Peek().EsHoja)
                     {
                         nuevoNodo.ItemExpresion = expresionPostfija[0].ToString();
 

@@ -152,11 +152,14 @@ namespace PostFijo_Arbol
             {
                 while (PilaOperdores.Count > 0)
                 {
-                    Postfija += PilaOperdores.Pop();
+                    if (PilaOperdores.Peek() != '(')
+                    {
+                        Postfija += PilaOperdores.Pop();
+                    }
                 }
             }
 
-            Postfija += ".#"; //Se le agrega para mostrar que se llegó al estado de aceptación
+            //Postfija += ".#"; //Se le agrega para mostrar que se llegó al estado de aceptación
         }
     }
 }
