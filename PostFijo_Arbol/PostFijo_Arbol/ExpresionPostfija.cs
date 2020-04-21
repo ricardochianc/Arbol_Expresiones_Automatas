@@ -95,7 +95,7 @@ namespace PostFijo_Arbol
         {
             Infija = infijo;
 
-            while(Infija != "")
+            while (Infija != "")
             {
                 if (!Operadores.Contains(Infija[0]) && Infija[0] != ')') //Si es operando y diferente a paréntisis derecho
                 {
@@ -126,7 +126,7 @@ namespace PostFijo_Arbol
                         }
                     }
                 }
-                else if(Infija[0] == ')')
+                else if (Infija[0] == ')')
                 {
                     Postfija += PilaOperdores.Pop();
 
