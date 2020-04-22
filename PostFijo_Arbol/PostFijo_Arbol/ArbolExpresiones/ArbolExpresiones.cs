@@ -52,7 +52,10 @@ namespace PostFijo_Arbol.ArbolExpresiones
                     {
                         nuevoNodo.ItemExpresion = expresionPostfija[0].ToString();
                         
-                        nuevoNodo.IzqNodo = pila.Pop();
+                        if(pila.Count > 0)
+                        {
+                            nuevoNodo.IzqNodo = pila.Pop();
+                        }
                     }
                     pila.Push(nuevoNodo);
                 }
