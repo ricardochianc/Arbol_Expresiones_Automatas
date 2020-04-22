@@ -20,7 +20,7 @@ namespace PostFijo_Arbol
             var arbol = new ArbolExpresiones.ArbolExpresiones();
             arbol.CrearArbol(expresionPostfija);
 
-            Console.WriteLine("\nEl árbol se genera automaticamente");
+            Console.WriteLine("\nEl árbol se genera automaticamente, pero no se muestra en pantalla\nPara verlo hay que poner un punto de interrupción en en main y buscar el arbol");
 
             Console.ReadKey();
         }
