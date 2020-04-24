@@ -143,7 +143,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                     raiz.First = (raiz.IzqNodo.First);
                 }
             }
-            else if(raiz.ItemExpresion == "*")
+            else if(raiz.ItemExpresion == "*" || raiz.ItemExpresion == "+")
             {
                 raiz.First= raiz.IzqNodo.First;
             }
@@ -172,7 +172,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                     raiz.Last = (raiz.DrchNodo.Last);
                 }
             }
-            else if (raiz.ItemExpresion == "*")
+            else if (raiz.ItemExpresion == "*" || raiz.ItemExpresion == "+")
             {
                 raiz.Last = raiz.IzqNodo.Last;
             }
@@ -185,17 +185,30 @@ namespace PostFijo_Arbol.ArbolExpresiones
                 //Para               todo last de C1 
                 foreach (var nodo in raiz.IzqNodo.Last)
                 {
-                    //                                    El FIRST de C2
-                    Hojas[nodo.NumNodo-1].Follow.AddRange(raiz.DrchNodo.First);
+                    //                             El FIRST de C2
+                    foreach (var nodoFirst in raiz.DrchNodo.First)
+                    {
+                        //Si ya está entre los Follow no ingresarlo, sino se repetirá en la "tabla" (lista Hojas) de FOLLOWS
+                        if (!Hojas[nodo.NumNodo - 1].Follow.Contains(nodoFirst))
+                        {
+                            Hojas[nodo.NumNodo - 1].Follow.Add(nodoFirst);
+                        }
+                    }
                 }
             }
-            else if(raiz.ItemExpresion == "*")
+            else if(raiz.ItemExpresion == "*" || raiz.ItemExpresion == "+")
             {
                 //Para               todo last de C1 
                 foreach (var nodo in raiz.IzqNodo.Last)
                 {
                     //                                      El FIRST de C1
-                    Hojas[nodo.NumNodo - 1].Follow.AddRange(raiz.IzqNodo.First);
+                    foreach (var nodoFirst in raiz.IzqNodo.First)
+                    {
+                        if (!Hojas[nodo.NumNodo - 1].Follow.Contains(nodoFirst))
+                        {
+                            Hojas[nodo.NumNodo - 1].Follow.Add(nodoFirst);
+                        }
+                    }
                 }
             }
         }

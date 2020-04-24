@@ -9,6 +9,7 @@ namespace PostFijo_Arbol
             var convertidor = new ExpresionPostfija();
 
             //L.(L|D)*|D.D*
+            //((A|C)+|D*)+
 
             Console.WriteLine("Ingrese expresión para convertir a Postfijo: ");
             convertidor.ConvertirPostfijo(Console.ReadLine());
