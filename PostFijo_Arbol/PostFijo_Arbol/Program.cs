@@ -22,6 +22,11 @@ namespace PostFijo_Arbol
 
             Console.WriteLine("\nEl árbol se genera automaticamente, pero no se muestra en pantalla\nPara verlo hay que poner un punto de interrupción en en main y buscar el arbol");
 
+            var recorrido = "";
+            arbol.PostOrden(arbol.Raiz, ref recorrido);
+
+            Console.WriteLine("\n\nRecorrido postOrden: " + recorrido);
+
             Console.ReadKey();
         }
     }
