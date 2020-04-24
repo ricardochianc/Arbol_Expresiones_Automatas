@@ -15,6 +15,8 @@ namespace PostFijo_Arbol.ArbolExpresiones
         public bool EsHoja { get; set; }
         public int NumNodo { get; set; } //Servirá para guardar la numeración del nodo en caso de ser hoja
 
+        //Agregar si es nulo o no
+
         public Nodo()
         {
             ItemExpresion = string.Empty;
