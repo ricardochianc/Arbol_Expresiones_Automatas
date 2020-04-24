@@ -23,7 +23,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
 
             First = new List<Nodo>();
             Last = new List<Nodo>();
-            Follow = new List<Nodo>();
+            Follow = null;
 
             IzqNodo = null;
             DrchNodo = null;

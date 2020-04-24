@@ -8,6 +8,8 @@ namespace PostFijo_Arbol
         {
             var convertidor = new ExpresionPostfija();
 
+            //L.(L|D)*|D.D*
+
             Console.WriteLine("Ingrese expresión para convertir a Postfijo: ");
             convertidor.ConvertirPostfijo(Console.ReadLine());
 
@@ -18,12 +20,15 @@ namespace PostFijo_Arbol
             Console.WriteLine("el estado de aceptación");
 
             var arbol = new ArbolExpresiones.ArbolExpresiones();
-            arbol.CrearArbol(expresionPostfija);
+
+
+            arbol.CrearArbol(expresionPostfija); //Linea operatoria
 
             Console.WriteLine("\nEl árbol se genera automaticamente, pero no se muestra en pantalla\nPara verlo hay que poner un punto de interrupción en en main y buscar el arbol");
 
             var recorrido = "";
-            arbol.PostOrden(arbol.Raiz, ref recorrido);
+
+            arbol.PostOrdenOperaciones(arbol.Raiz, ref recorrido); //Linea operatoria
 
             Console.WriteLine("\n\nRecorrido postOrden: " + recorrido);
 

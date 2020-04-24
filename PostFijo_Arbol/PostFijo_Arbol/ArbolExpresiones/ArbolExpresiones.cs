@@ -9,8 +9,8 @@ namespace PostFijo_Arbol.ArbolExpresiones
         private List<char> Operadores { get; set; }
         public Nodo Raiz { get; set; }
 
-        //Lista que tendrá solo los nodos hoja, para que al momento de calcular
-        //la tabla de transiciones se más fácil y no hay que recorrer todo el árbol
+        //Lista que tendrá solo los nodos hoja, para que al momento de calcular los follow y
+        //la tabla de transiciones sea más fácil y no hay que recorrer todo el árbol
         private List<Nodo> Hojas { get; set; } 
         
 
@@ -28,6 +28,10 @@ namespace PostFijo_Arbol.ArbolExpresiones
             Hojas = new List<Nodo>();
         }
 
+        /// <summary>
+        /// Método para la creación del árbol basado en la notación postfija
+        /// </summary>
+        /// <param name="expresionPostfija"></param>
         public void CrearArbol(string expresionPostfija)
         {
             var pila = new Stack<Nodo>(); //Pila que guardará momentanemente los nodos para ir formando en orden el árbol
@@ -41,6 +45,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                 {
                     nuevoNodo.ItemExpresion = expresionPostfija[0].ToString();
                     nuevoNodo.NumNodo = contadorHojas;
+                    nuevoNodo.Follow = new List<Nodo>();
                     nuevoNodo.EsHoja = true;
                     contadorHojas ++;
 
@@ -89,24 +94,33 @@ namespace PostFijo_Arbol.ArbolExpresiones
             }
         }
 
-        public void PostOrden(Nodo raiz, ref string recorrido)
+        /// <summary>
+        /// Método que recorre el árbol de manera PostOrden (izquierdo-derecho-raiz)
+        /// y opera FIRST, LAST y FOLLOW
+        /// </summary>
+        /// <param name="raiz">Nodo árbol</param>
+        /// <param name="recorrido">Variable que guarda el recorrido</param>
+        public void PostOrdenOperaciones(Nodo raiz, ref string recorrido)
         {
             if (raiz != null)
             {
-                PostOrden(raiz.IzqNodo, ref recorrido);
-                PostOrden(raiz.DrchNodo, ref recorrido);
+                PostOrdenOperaciones(raiz.IzqNodo, ref recorrido);
+                PostOrdenOperaciones(raiz.DrchNodo, ref recorrido);
                 recorrido += raiz.ItemExpresion;
 
                 CalcularFirst(raiz);
+                CalcularLast(raiz);
 
                 if (raiz.EsHoja)
                 {
                     Hojas.Add(raiz);
                 }
+
+                CalcularFollows(raiz);
             }
         }
 
-        public void CalcularFirst(Nodo raiz)
+        private void CalcularFirst(Nodo raiz)
         {
             if (raiz.EsHoja)
             {
@@ -132,6 +146,57 @@ namespace PostFijo_Arbol.ArbolExpresiones
             else if(raiz.ItemExpresion == "*")
             {
                 raiz.First= raiz.IzqNodo.First;
+            }
+        }
+
+        private void CalcularLast(Nodo raiz)
+        {
+            if (raiz.EsHoja)
+            {
+                raiz.Last.Add(raiz);
+            }
+            else if (raiz.ItemExpresion == "|")
+            {
+                raiz.Last.AddRange(raiz.IzqNodo.Last);
+                raiz.Last.AddRange(raiz.DrchNodo.Last);
+            }
+            else if (raiz.ItemExpresion == ".")
+            {
+                if (raiz.DrchNodo.Nulo)
+                {
+                    raiz.Last.AddRange(raiz.IzqNodo.Last);
+                    raiz.Last.AddRange(raiz.DrchNodo.Last);
+                }
+                else
+                {
+                    raiz.Last = (raiz.DrchNodo.Last);
+                }
+            }
+            else if (raiz.ItemExpresion == "*")
+            {
+                raiz.Last = raiz.IzqNodo.Last;
+            }
+        }
+
+        private void CalcularFollows(Nodo raiz)
+        {
+            if (raiz.ItemExpresion == ".")
+            {
+                //Para               todo last de C1 
+                foreach (var nodo in raiz.IzqNodo.Last)
+                {
+                    //                                    El FIRST de C2
+                    Hojas[nodo.NumNodo-1].Follow.AddRange(raiz.DrchNodo.First);
+                }
+            }
+            else if(raiz.ItemExpresion == "*")
+            {
+                //Para               todo last de C1 
+                foreach (var nodo in raiz.IzqNodo.Last)
+                {
+                    //                                      El FIRST de C1
+                    Hojas[nodo.NumNodo - 1].Follow.AddRange(raiz.IzqNodo.First);
+                }
             }
         }
     }
