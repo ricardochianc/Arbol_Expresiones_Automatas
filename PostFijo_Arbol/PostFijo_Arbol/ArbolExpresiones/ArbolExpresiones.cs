@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PostFijo_Arbol.ArbolExpresiones
@@ -76,12 +77,12 @@ namespace PostFijo_Arbol.ArbolExpresiones
                     {
                         nuevoNodo.ItemExpresion = expresionPostfija[0].ToString();
 
-                        nuevoNodo.AsignarNulabilidad();
-
                         if (pila.Count > 0)
                         {
                             nuevoNodo.IzqNodo = pila.Pop();
                         }
+
+                        nuevoNodo.AsignarNulabilidad();
                     }
                     pila.Push(nuevoNodo);
                 }
@@ -200,6 +201,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                         if (!Hojas[nodo.NumNodo - 1].Follow.Contains(nodoFirst))
                         {
                             Hojas[nodo.NumNodo - 1].Follow.Add(nodoFirst);
+                            Hojas[nodo.NumNodo - 1].Follow.Sort(Nodo.OrdenarPorNodo);
                         }
                     }
                 }
@@ -215,6 +217,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                         if (!Hojas[nodo.NumNodo - 1].Follow.Contains(nodoFirst))
                         {
                             Hojas[nodo.NumNodo - 1].Follow.Add(nodoFirst);
+                            Hojas[nodo.NumNodo - 1].Follow.Sort(Nodo.OrdenarPorNodo);
                         }
                     }
                 }

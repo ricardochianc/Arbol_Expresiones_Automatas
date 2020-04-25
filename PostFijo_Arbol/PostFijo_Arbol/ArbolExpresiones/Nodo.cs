@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PostFijo_Arbol.ArbolExpresiones
 {
-    public class Nodo
+    public class Nodo : IComparable
     {
         public string ItemExpresion { get; set; }
         public List<Nodo> First { get; set; } 
@@ -43,7 +43,18 @@ namespace PostFijo_Arbol.ArbolExpresiones
             }
             else if (ItemExpresion == "+")
             {
-                Nulo = false;
+                if (IzqNodo != null)
+                {
+                    if (IzqNodo.Nulo)
+                    {
+                        Nulo = true;
+                    }
+                    else
+                    {
+                        Nulo = false;
+                    }
+                }
+
             }
             else if(ItemExpresion == ".")
             {
@@ -63,5 +74,16 @@ namespace PostFijo_Arbol.ArbolExpresiones
                 }
             }
         }
+
+        public int CompareTo(object obj)
+        {
+            var comparer = (Nodo) obj;
+            return NumNodo.CompareTo(comparer.NumNodo);
+        }
+
+        public static Comparison<Nodo> OrdenarPorNodo = delegate(Nodo nodo1, Nodo nodo2)
+        {
+            return nodo1.CompareTo(nodo2);
+        };
     }
 }
