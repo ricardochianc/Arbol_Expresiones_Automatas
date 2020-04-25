@@ -226,6 +226,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
             //El estado incial es el FIRST de la raíz
             Estados.Add(new Estado(Raiz.First));
 
+            //Se plantean todos los caracteres que se van a analizar, o sea se muestra el valor de todas las hojas sin repetirse
             foreach (var nodoHoja in Hojas)
             {
                 if (!TablaTransiciones.ContainsKey(nodoHoja.ItemExpresion) && nodoHoja.ItemExpresion != "#")
@@ -234,18 +235,29 @@ namespace PostFijo_Arbol.ArbolExpresiones
                 }
             }
 
+            //Como hay una lista de estados, se hace el procedimiento por cada estado de la lista y se le aplica a cada "columna/caracter/Hoja"
             for (int i = 0; i < Estados.Count; i++)
             {
+                //Por cada "columna/caracter/Hoja", se hace...
                 foreach (var columna in TablaTransiciones)
                 {
+                    //Variable que sirve para llevar el control si algún "nodo" del estado que se está evaluando coincide
                     var match = false;
 
+                    //Por cada "nodo" del estado que se evalúa actualmente
                     foreach (var nodoEstado in Estados[i].ListaNodos)
                     {
+                        //si algún nodo coincide con la "columna/caracter/Hoja"...
                         if (nodoEstado.ItemExpresion == columna.Key)
                         {
+                            //se marca que sí coincide y...
                             match = true;
-                            //Por cada nodo del FOLLOW | De los FOLLOW de ese nodo perteneciente al estado     
+
+                            //se manda a traer los FOLLOW de ese nodo que se analiza.
+
+                            //Luego para que no hayan datos repetidos en el estado que se está creando, se hace que....
+
+                            //Por cada nodo del FOLLOW se verifica si ya se ingresó previamente al nuevo estado
                             foreach (var nodoFollow in Hojas[nodoEstado.NumNodo - 1].Follow)
                             {
                                 if (columna.Value.Count == i)
