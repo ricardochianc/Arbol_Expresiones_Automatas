@@ -30,6 +30,7 @@ namespace PostFijo_Arbol
             var recorrido = "";
 
             arbol.PostOrdenOperaciones(arbol.Raiz, ref recorrido); //Linea operatoria
+            arbol.GenerarTransiciones();
 
             Console.WriteLine("\n\nRecorrido postOrden: " + recorrido);
 
