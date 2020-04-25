@@ -7,7 +7,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
     public class Nodo
     {
         public string ItemExpresion { get; set; }
-        public List<Nodo> First { get; set; }
+        public List<Nodo> First { get; set; } 
         public List<Nodo> Last { get; set; }
         public List<Nodo> Follow { get; set; }
         public Nodo IzqNodo { get; set; } //Hijo izquierdo

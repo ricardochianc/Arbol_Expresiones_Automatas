@@ -272,7 +272,6 @@ namespace PostFijo_Arbol.ArbolExpresiones
                             }
 
                             var existe = false;
-                            var casilla = 0;
 
                             for (int j = 0; j < Estados.Count; j++)
                             {
