@@ -298,7 +298,7 @@ namespace PostFijo_Arbol.ArbolExpresiones
                                     }
                                 }
 
-                                if (existe == true)
+                                if (existe)
                                 {
                                     columna.Value[i].Nombre = Estados[j].Nombre;
                                     break;
